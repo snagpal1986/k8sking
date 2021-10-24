@@ -1,0 +1,25 @@
+1. What are kind of deployments in kubernetes. 
+
+Rolling Strategy Deployment--The rolling deployment is the standard default deployment to Kubernetes. It works by slowly, one by one, replacing pods of the previous version of your application with pods of the new version without any cluster downtime.
+Recreate---in this type of very simple deployment, all of the old pods are killed all at once and get replaced all at once with the new ones
+Blue/ Green (or Red / Black) deployments---In a blue/green deployment strategy (sometimes referred to as red/black) the old version of the application (green) and the new version (blue) get deployed at the same time. When both of these are deployed, users only have access to the green; whereas, the blue is available to your QA team for test automation on a separate service or via direct port-forwarding
+Canary--Canary
+Canary deployments are a bit like blue/green deployments, but are more controlled and use a more ‘progressive delivery’ phased-in approach. There are a number of strategies that fall under the umbrella of canary including: dark launches, or A/B testing.
+
+
+2. What are kind of services in K8s.
+
+ClusterIP. Exposes a service which is only accessible from within the cluster. Used for internal cluster communication
+NodePort. Exposes a service via a static port on each node’s IP. for external communication(exposed to the internet)
+LoadBalancer. Exposes the service via the cloud provider’s load balancer.
+ExternalName. Maps a service to a predefined externalName field by returning a value for the CNAME record.
+
+3. Define deployment, deamonsets and stafulsets in your words
+
+Deployment-- USed for managing a stateless application workload on your cluster. example tomact,nginx
+StatefulSet lets you manage stateful applications where state is maintained. example mssql db
+DaemonSet defines Pods that provide node-local facilities.It helps to run pods which are to be run on all nodes like health checks for all nodes.
+
+
+4. stateful vs stateless
+Stateless apps do not store application state or data to persistent storage, which makes stateless applications highly scalable. However, stateful applications require persistent storage for data for use by clients, servers, and other applications.
