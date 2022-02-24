@@ -1,0 +1,179 @@
+brocade zoning if we need to change server name then what we need to do is zoneobjectrename the alias
+and then one by one rename the zone name
+
+
+
+pencorefcsw02:admin> cfgsave
+You are about to save the Defined zoning configuration. This
+action will only save the changes on Defined configuration.
+If the update includes changes to one or more traffic isolation
+zones, you must issue the 'cfgenable' command for the changes
+to take effect.
+Do you want to save the Defined zoning configuration only?  (yes, y, no, n): [no] y
+Nothing changed: nothing to save, returning ...
+pencorefcsw02:admin> alidelete penvivsppc50n73_hba2
+pencorefcsw02:admin> alicreate "penvivsppc53n73_hba2", "10:00:14:02:ec:ec:ac:cf"
+pencorefcsw02:admin> cfgsave
+WARNING!!!
+The changes you are attempting to save will render the
+Effective configuration and the Defined configuration
+inconsistent. The inconsistency will result in different
+Effective Zoning configurations for switches in the fabric if
+a zone merge or HA failover happens. To avoid inconsistency
+it is recommended to commit the configurations using the
+'cfgenable' command.
+
+Do you want to proceed with saving the Defined
+zoning configuration only?  (yes, y, no, n): [no] y
+"penvivsppc50n73_hba2" not found 
+pencorefcsw02:admin> zoneobject rename "penvivsppc50n73_hba2", "penvivsppc53n73_hba2"
+rbash: zoneobject: command not found
+pencorefcsw02:admin> zoneobjectrename "penvivsppc50n73_hba2", "penvivsppc53n73_hba2"
+"penvivsppc53n73_hba2" duplicate name
+pencorefcsw02:admin> alidelete "penvivsppc53n73_hba2"
+
+pencorefcsw02:admin>
+pencorefcsw02:admin> alicreate "penvivsppc50n73_hba2", "10:00:14:02:ec:ec:ac:cf"
+pencorefcsw02:admin> cfgsave
+You are about to save the Defined zoning configuration. This
+action will only save the changes on Defined configuration.
+If the update includes changes to one or more traffic isolation
+zones, you must issue the 'cfgenable' command for the changes
+to take effect.
+Do you want to save the Defined zoning configuration only?  (yes, y, no, n): [no] y
+Updating flash ...
+pencorefcsw02:admin> zoneobjectrename "penvivsppc50n73_hba2", "penvivsppc53n73_hba2"
+pencorefcsw02:admin> zoneshow | grep "penvivsppc50n73_hba2"
+                penvivsppc50n73_hba2_PENUTY1549_SPA2;
+                penvivsppc50n73_hba2_PENUTY1549_SPB2;
+                penvivsppc50n73_hba2_PENUTY1549_SPB0;
+                penvivsppc50n73_hba2_PENUTY1549_SPA0;
+ zone:  penvivsppc50n73_hba2_PENUTY1549_SPA0
+ zone:  penvivsppc50n73_hba2_PENUTY1549_SPA2
+ zone:  penvivsppc50n73_hba2_PENUTY1549_SPB0
+ zone:  penvivsppc50n73_hba2_PENUTY1549_SPB2
+ zone:  penvivsppc50n73_hba2_PENUTY1549_SPA0
+ zone:  penvivsppc50n73_hba2_PENUTY1549_SPA2
+ zone:  penvivsppc50n73_hba2_PENUTY1549_SPB0
+ zone:  penvivsppc50n73_hba2_PENUTY1549_SPB2
+pencorefcsw02:admin> zoneshow | grep "penvivsppc53n73_hba2"
+                PENUTY1549_SPA0; penvivsppc53n73_hba2
+                PENUTY1549_SPA2; penvivsppc53n73_hba2
+                PENUTY1549_SPB0; penvivsppc53n73_hba2
+                PENUTY1549_SPB2; penvivsppc53n73_hba2
+ alias: penvivsppc53n73_hba2
+pencorefcsw02:admin> zonobjectrename "penvivsppc50n73_hba2_PENUTY1549_SPA0", "penvivsppc53n73_hba2_PENUTY1549_SPA0"
+rbash: zonobjectrename: command not found
+pencorefcsw02:admin> zonebjectrename "penvivsppc50n73_hba2_PENUTY1549_SPA0", "penvivsppc53n73_hba2_PENUTY1549_SPA0"
+rbash: zonebjectrename: command not found
+pencorefcsw02:admin> zoneobjectrename "penvivsppc50n73_hba2_PENUTY1549_SPA0", "penvivsppc53n73_hba2_PENUTY1549_SPA0"
+pencorefcsw02:admin> zoneshow | grep "penvivsppc50n73_hba2"
+                penvivsppc50n73_hba2_PENUTY1549_SPA2;
+                penvivsppc50n73_hba2_PENUTY1549_SPB2;
+                penvivsppc50n73_hba2_PENUTY1549_SPB0;
+ zone:  penvivsppc50n73_hba2_PENUTY1549_SPA2
+ zone:  penvivsppc50n73_hba2_PENUTY1549_SPB0
+ zone:  penvivsppc50n73_hba2_PENUTY1549_SPB2
+ zone:  penvivsppc50n73_hba2_PENUTY1549_SPA0
+ zone:  penvivsppc50n73_hba2_PENUTY1549_SPA2
+ zone:  penvivsppc50n73_hba2_PENUTY1549_SPB0
+ zone:  penvivsppc50n73_hba2_PENUTY1549_SPB2
+pencorefcsw02:admin> zoneshow | grep "penvivsppc53n73_hba2"
+                penvivsppc53n73_hba2_PENUTY1549_SPA0
+                PENUTY1549_SPA2; penvivsppc53n73_hba2
+                PENUTY1549_SPB0; penvivsppc53n73_hba2
+                PENUTY1549_SPB2; penvivsppc53n73_hba2
+ zone:  penvivsppc53n73_hba2_PENUTY1549_SPA0
+                PENUTY1549_SPA0; penvivsppc53n73_hba2
+ alias: penvivsppc53n73_hba2
+pencorefcsw02:admin> cfgsave
+WARNING!!!
+The changes you are attempting to save will render the
+Effective configuration and the Defined configuration
+inconsistent. The inconsistency will result in different
+Effective Zoning configurations for switches in the fabric if
+a zone merge or HA failover happens. To avoid inconsistency
+it is recommended to commit the configurations using the
+'cfgenable' command.
+
+Do you want to proceed with saving the Defined
+zoning configuration only?  (yes, y, no, n): [no] y
+Updating flash ...
+pencorefcsw02:admin> zoneshow | grep "penvivsppc53n73_hba2"
+                penvivsppc53n73_hba2_PENUTY1549_SPA0
+                PENUTY1549_SPA2; penvivsppc53n73_hba2
+                PENUTY1549_SPB0; penvivsppc53n73_hba2
+                PENUTY1549_SPB2; penvivsppc53n73_hba2
+ zone:  penvivsppc53n73_hba2_PENUTY1549_SPA0
+                PENUTY1549_SPA0; penvivsppc53n73_hba2
+ alias: penvivsppc53n73_hba2
+pencorefcsw02:admin> zoneshow | grep "penvivsppc50n73_hba2"
+                penvivsppc50n73_hba2_PENUTY1549_SPA2;
+                penvivsppc50n73_hba2_PENUTY1549_SPB2;
+                penvivsppc50n73_hba2_PENUTY1549_SPB0;
+ zone:  penvivsppc50n73_hba2_PENUTY1549_SPA2
+ zone:  penvivsppc50n73_hba2_PENUTY1549_SPB0
+ zone:  penvivsppc50n73_hba2_PENUTY1549_SPB2
+ zone:  penvivsppc50n73_hba2_PENUTY1549_SPA0
+ zone:  penvivsppc50n73_hba2_PENUTY1549_SPA2
+ zone:  penvivsppc50n73_hba2_PENUTY1549_SPB0
+ zone:  penvivsppc50n73_hba2_PENUTY1549_SPB2
+pencorefcsw02:admin> zoneshow penvivsppc50n73_hba2_PENUTY1549_SPA0
+
+"penvivsppc50n73_hba2_PENUTY1549_SPA0" does not exist.
+pencorefcsw02:admin> zoneshow penvivsppc53n73_hba2_PENUTY1549_SPA0
+ zone:  penvivsppc53n73_hba2_PENUTY1549_SPA0
+                PENUTY1549_SPA0; penvivsppc53n73_hba2
+
+pencorefcsw02:admin> zoneshow "penvivsppc50n73_hba2_PENUTY1549_SPB0", "penvivsppc53n73_hba2_PENUTY1549_SPB0"
+ zone:  penvivsppc50n73_hba2_PENUTY1549_SPB0
+                PENUTY1549_SPB0; penvivsppc53n73_hba2
+
+pencorefcsw02:admin> zoneobjectrename "penvivsppc50n73_hba2_PENUTY1549_SPB0", "penvivsppc53n73_hba2_PENUTY1549_SPB0"
+pencorefcsw02:admin> zoneobjectrename "penvivsppc50n73_hba2_PENUTY1549_SPB2", "penvivsppc53n73_hba2_PENUTY1549_SPB2"
+pencorefcsw02:admin> zoneobjectrename "penvivsppc50n73_hba2_PENUTY1549_SPA2", "penvivsppc53n73_hba2_PENUTY1549_SPA2"
+pencorefcsw02:admin> cfgsave
+WARNING!!!
+The changes you are attempting to save will render the
+Effective configuration and the Defined configuration
+inconsistent. The inconsistency will result in different
+Effective Zoning configurations for switches in the fabric if
+a zone merge or HA failover happens. To avoid inconsistency
+it is recommended to commit the configurations using the
+'cfgenable' command.
+
+Do you want to proceed with saving the Defined
+zoning configuration only?  (yes, y, no, n): [no] y
+Updating flash ...
+pencorefcsw02:admin> cfgenable "PEN_FABRIC_EVEN"
+You are about to enable a new zoning configuration.
+This action will replace the old zoning configuration with the
+current configuration selected. If the update includes changes
+to one or more traffic isolation zones, the update may result in
+localized disruption to traffic on ports associated with
+the traffic isolation zone changes.
+Do you want to enable 'PEN_FABRIC_EVEN' configuration  (yes, y, no, n): [no] y
+zone config "PEN_FABRIC_EVEN" is in effect
+Updating flash ...
+pencorefcsw02:admin> cfgshow | grep penvivsppc50n73
+pencorefcsw02:admin> cfgshow | grep penvivsppc53n73
+                penvivsppc53n73_hba2_PENUTY1549_SPA0;
+                penvivsppc53n73_hba2_PENUTY1549_SPB0;
+                penvivsppc53n73_hba2_PENUTY1549_SPB2;
+                penvivsppc53n73_hba2_PENUTY1549_SPA2
+ zone:  penvivsppc53n73_hba2_PENUTY1549_SPA0
+                PENUTY1549_SPA0; penvivsppc53n73_hba2
+ zone:  penvivsppc53n73_hba2_PENUTY1549_SPA2
+                PENUTY1549_SPA2; penvivsppc53n73_hba2
+ zone:  penvivsppc53n73_hba2_PENUTY1549_SPB0
+                PENUTY1549_SPB0; penvivsppc53n73_hba2
+ zone:  penvivsppc53n73_hba2_PENUTY1549_SPB2
+                PENUTY1549_SPB2; penvivsppc53n73_hba2
+ alias: penvivsppc53n73_hba2
+ zone:  penvivsppc53n73_hba2_PENUTY1549_SPA0
+ zone:  penvivsppc53n73_hba2_PENUTY1549_SPA2
+ zone:  penvivsppc53n73_hba2_PENUTY1549_SPB0
+ zone:  penvivsppc53n73_hba2_PENUTY1549_SPB2
+pencorefcsw02:admin> zoneshow penvivsppc53n73_hba2_PENUTY1549_SPA0
+ zone:  penvivsppc53n73_hba2_PENUTY1549_SPA0
+                PENUTY1549_SPA0; penvivsppc53n73_hba2
